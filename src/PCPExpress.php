@@ -22,7 +22,9 @@ class PCPExpress
 	public function getOriginAndDestination()
 	{
 		$response = Requests::get(self::URL . '/pcp.api/regiononline.php', [], $this->_getOptions());
-		return $response->body;
+		if (isset($response->body)) {
+			return json_decode($response->body);
+		}
 	}
 
 	public function deliveryCharge($from, $thru, $weight) {
