@@ -10,20 +10,16 @@ class PCPExpress
 	private $username;
 	private $password;
 	private $url;
+	private $url_path;
 	private $originAndDestination;
 
-	public function setCredentials($username, $password, $url)
+	public function setCredentials($username, $password, $url, $url_path)
 	{
 		$this->username = $username;
 		$this->password = $password;
 		$this->url = $url;
+		$this->url_path = $url_path;
 		return $this;
-	}
-	
-	public function setEnvironment($environment) {
-		if ($environment == 'development' || $environment == 'production') {
-			$this->environment = $environment;
-		}
 	}
 
 	public function getOriginAndDestination()
@@ -46,7 +42,7 @@ class PCPExpress
 
 	public function postShipment($params)
 	{
-		$response =  Requests::post($this->url . '/pcp.api/ecommerce/service/training/posonline.php', [], $params, $this->_getOptions());
+		$response =  Requests::post($this->url . '/pcp.api/ecommerce/service/' . $this->url_path . '/posonline.php', [], $params, $this->_getOptions());
 		return json_decode($response->body);
 	}
 
